@@ -62,3 +62,7 @@ class VM(RefModel):
     def get_is_control_domain(self):
         return self.record['is_control_domain']
     is_control_domain = property(get_is_control_domain)
+
+    def snapshot(self, name):
+        return self.api.snapshot_vm(self, name)
+

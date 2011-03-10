@@ -1,4 +1,4 @@
-from xswizard.models import Host
+from xswizard.models import Host, VM
 
 class API(object):
     def __init__(self, url, username, password):
@@ -56,6 +56,20 @@ class API(object):
         """
         return self._api.VM.get_record(ref)
 
+    def _vm_snapshot(self, ref, name):
+        """
+        xenapi.VM.snapshot
+        """
+        return self._api.VM.snapshot(ref, name)
+
     def get_hosts(self):
         data = self._host_get_all()
         return [Host(record, self) for record in data]
+
+    def snapshot_vm(self, vm, name):
+        """
+        create vm snapshot
+        """
+        snapshot_ref = self._vm_snapshot(vm.ref, name)
+        return VM(snapshot_ref, self)
+
