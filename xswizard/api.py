@@ -8,6 +8,13 @@ class API(object):
         self.is_login = False
         self._session = None
 
+    def __repr__(self):
+        return '<%s.%s: url=%s, username=%s>' % (
+            self.__class__.__module__,
+            self.__class__.__name__,
+            self.url,
+            self.username)
+
     def _create_session(self):
         from xswizard import XenAPI
         return XenAPI.Session(self.url)
