@@ -1,0 +1,2 @@
+class APINotSet(Exception):
+    pass
