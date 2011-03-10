@@ -1,2 +1,7 @@
 syntax: glob
 *.pyc
+*.swp
+*.orig
+
+syntax: regexp
+^sample\.py$

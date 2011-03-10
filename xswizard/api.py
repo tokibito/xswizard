@@ -52,7 +52,3 @@ class API(object):
     def get_hosts(self):
         data = self._host_get_all()
         return [Host(record, self) for record in data]
-
-    def get_vm(self, ref):
-        data = self._vm_get_record(ref)
-        return VM(data, self)
