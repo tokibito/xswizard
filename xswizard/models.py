@@ -25,7 +25,7 @@ class RefModel(BaseModel):
     ref = property(_get_ref)
 
     def __repr__(self):
-        return '<%s: %s>' % (self.__class__.__name__, self.ref)
+        return '<%s.%s: %s>' % (self.__class__.__module__, self.__class__.__name__, self.ref)
 
 
 class Host(RefModel):
@@ -57,7 +57,7 @@ class VM(RefModel):
     record = property(get_record)
 
     def __repr__(self):
-        return '<%s: %s>' % (self.__class__.__name__, self.record['name_label'])
+        return '<%s.%s: %s>' % (self.__class__.__module__, self.__class__.__name__, self.record['name_label'])
 
     def get_is_control_domain(self):
         return self.record['is_control_domain']
