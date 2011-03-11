@@ -1,5 +1,6 @@
 from xswizard.models import Host, VM
 
+
 class API(object):
     def __init__(self, url, username, password):
         self.url = url
@@ -72,4 +73,3 @@ class API(object):
         """
         snapshot_ref = self._vm_snapshot(vm.ref, name)
         return VM(snapshot_ref, self)
-
