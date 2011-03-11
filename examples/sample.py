@@ -7,7 +7,7 @@
 import time
 from xswizard.api import API
 
-URL = 'http://192.168.11.100/'
+URL = 'https://192.168.11.100/'
 USERNAME = 'root'
 PASSWORD = ''
 
@@ -15,4 +15,6 @@ api = API(URL, USERNAME, PASSWORD)
 print api
 vms = api.get_hosts()[0].residentVMs
 print vms
-print vms[1].snapshot('test_snapshot_%s' % int(time.time()))
+vm = vms[1].snapshot('test_snapshot_%s' % int(time.time()))
+print vm
+#vm.export_as_file('test.xva')

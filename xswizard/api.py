@@ -1,3 +1,6 @@
+import base64
+import urllib2
+
 from xswizard.models import Host, VM
 
 
@@ -62,6 +65,19 @@ class API(object):
         xenapi.VM.snapshot
         """
         return self._api.VM.snapshot(ref, name)
+
+    def _export(self, uuid):
+        """
+        export as backup (return stream handler)
+        """
+        if self.url.endswith('/'):
+            url = "%sexport?uuid=%s" % (self.url, uuid)
+        else:
+            url = "%s/export?uuid=%s" % (self.url, uuid)
+        auth = base64.b64encode("%s:%s" % (self.username, self.password))
+        request = urllib2.Request(url)
+        request.add_header('Authorization', "Basic %s" % auth)
+        return urllib2.urlopen(request)
 
     def get_hosts(self):
         data = self._host_get_all()

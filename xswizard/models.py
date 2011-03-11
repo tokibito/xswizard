@@ -1,4 +1,5 @@
 from xswizard.exceptions import APINotSet
+from xswizard import constants
 
 
 class BaseModel(object):
@@ -72,3 +73,16 @@ class VM(RefModel):
 
     def snapshot(self, name):
         return self.api.snapshot_vm(self, name)
+
+    def _export(self):
+        return self.api._export(self.record['uuid'])
+
+    def export_as_file(self, filepath):
+        input = self._export()
+        output = open(filepath, 'wb')
+        while True:
+            data = input.read(constants.EXPORT_BLOCK_SIZE)
+            if not data:
+                break
+            output.write(data)
+        output.close()
