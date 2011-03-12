@@ -66,6 +66,12 @@ class API(object):
         """
         return self._api.VM.snapshot(ref, name)
 
+    def _vm_suspend(self, ref):
+        """
+        xenapi.VM.suspend
+        """
+        return self._api.VM.suspend(ref)
+
     def _export(self, uuid):
         """
         export as backup (return stream handler)
@@ -89,3 +95,9 @@ class API(object):
         """
         snapshot_ref = self._vm_snapshot(vm.ref, name)
         return VM(snapshot_ref, self)
+
+    def suspend_vm(self, vm):
+        """
+        suspend vm
+        """
+        self._vm_suspend(vm.ref)
