@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 from setuptools import setup, find_packages
- 
-setup (
+
+setup(
     name='xswizard',
     version='0.1',
     description='XenServer API wrapper',
