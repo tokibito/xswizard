@@ -2,6 +2,8 @@ syntax: glob
 *.pyc
 *.swp
 *.orig
+*.egg-info
 
 syntax: regexp
+^dist/
 ^sample\.py$
