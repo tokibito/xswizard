@@ -77,6 +77,9 @@ class VM(RefModel):
     def suspend(self):
         return self.api.suspend_vm(self)
 
+    def get_snapshots(self):
+        return self.api.get_snapshots(self)
+
     def _export(self):
         return self.api._export(self.record['uuid'])
 
