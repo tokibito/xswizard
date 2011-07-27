@@ -71,6 +71,20 @@ class VM(RefModel):
         return self.record['is_control_domain']
     is_control_domain = property(get_is_control_domain)
 
+    def get_is_a_template(self):
+        return self.record['is_a_template']
+    is_a_template = property(get_is_a_template)
+
+    def get_is_default_template(self):
+        value = self.record['other_config'].get('default_template')
+        return value == 'true'
+    is_default_template = property(get_is_default_template)
+
+    def get_is_instant(self):
+        value = self.record['other_config'].get('instant')
+        return value == 'true'
+    is_instant = property(get_is_instant)
+
     def snapshot(self, name):
         return self.api.snapshot_vm(self, name)
 

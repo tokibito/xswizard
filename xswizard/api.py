@@ -54,6 +54,12 @@ class API(object):
         """
         return self._api.host.get_record(ref)
 
+    def _vm_get_all_records(self):
+        """
+        xenapi.VM.get_all_records
+        """
+        return self._api.VM.get_all_records()
+
     def _vm_get_record(self, ref):
         """
         xenapi.VM.get_record
@@ -114,3 +120,24 @@ class API(object):
         """
         data = self._vm_get_snapshots(vm.ref)
         return [VM(record, self) for record in data]
+
+    def get_all_vms(self):
+        """
+        all vm records
+        """
+        data = self._vm_get_all_records()
+        return [VM(record, self) for record in data]
+
+    def get_all_vm_templates(self):
+        """
+        all vm templates
+        """
+        vms = self.get_all_vms()
+        return filter(lambda vm: vm.is_a_template, vms)
+
+    def get_instant_vm_templates(self):
+        """
+        vm templates not default
+        """
+        vms = self.get_all_vm_templates()
+        return filter(lambda vm: vm.is_instant, vms)
