@@ -85,20 +85,48 @@ class VM(RefModel):
         return value == 'true'
     is_instant = property(get_is_instant)
 
+    def get_name_label(self):
+        return self.record['name_label']
+    name_label = property(get_name_label)
+
     def snapshot(self, name):
         return self.api.snapshot_vm(self, name)
 
     def suspend(self):
         return self.api.suspend_vm(self)
 
+    def clone(self, name):
+        return self.api.clone_vm(self, name)
+
+    def provision(self):
+        return self.api.provision_vm(self)
+
+    def start(self):
+        return self.api.start_vm(self)
+
+    def resume(self):
+        return self.api.resume_vm(self)
+
+    def clean_shutdown(self):
+        return self.api.clean_shutdown_vm(self)
+
+    def shutdown(self):
+        return self.api.shutdown_vm(self)
+
+    def clean_reboot(self):
+        return self.api.clean_reboot_vm(self)
+
+    def reboot(self):
+        return self.api.reboot_vm(self)
+
     def get_snapshots(self):
         return self.api.get_snapshots(self)
 
-    def _export(self):
+    def export(self):
         return self.api._export(self.record['uuid'])
 
     def export_as_file(self, filepath):
-        input = self._export()
+        input = self.export()
         output = open(filepath, 'wb')
         while True:
             data = input.read(constants.EXPORT_BLOCK_SIZE)

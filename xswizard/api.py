@@ -84,6 +84,42 @@ class API(object):
         """
         return self._api.VM.get_snapshots(ref)
 
+    def _vm_clone(self, ref, name):
+        """
+        xenapi.VM.clone
+        """
+        return self._api.VM.clone(ref, name)
+
+    def _vm_provision(self, ref):
+        """
+        xenapi.VM.provision
+        """
+        return self._api.VM.provision(ref)
+
+    def _vm_start(self, ref):
+        """
+        xenapi.VM.start
+        """
+        return self._api.VM.start(ref, False, False)
+
+    def _vm_resume(self, ref):
+        """
+        xenapi.VM.resume
+        """
+        return self._api.VM.resume(ref, False, False)
+
+    def _vm_clean_shutdown(self, ref):
+        """
+        xenapi.VM.clean_shutdown
+        """
+        return self._api.VM.clean_shutdown(ref)
+
+    def _vm_clean_reboot(self, ref):
+        """
+        xenapi.VM.clean_reboot
+        """
+        return self._api.VM.clean_reboot(ref)
+
     def _export(self, uuid):
         """
         export as backup (return stream handler)
@@ -114,6 +150,55 @@ class API(object):
         """
         self._vm_suspend(vm.ref)
 
+    def clone_vm(self, vm, name):
+        """
+        clone vm
+        """
+        clone_ref = self._vm_clone(vm.ref, name)
+        return VM(clone_ref, self)
+
+    def provision_vm(self, vm):
+        """
+        provision vm
+        """
+        return self._vm_provision(vm.ref)
+
+    def start_vm(self, vm):
+        """
+        start vm
+        """
+        return self._vm_start(vm.ref)
+
+    def clean_shutdown_vm(self, vm):
+        """
+        clean shutdown vm
+        """
+        return self._vm_clean_shutdown(vm.ref)
+
+    def shutdown_vm(self, vm):
+        """
+        shutdown vm alias
+        """
+        return self.clean_shutdown_vm(vm)
+
+    def clean_reboot_vm(self, vm):
+        """
+        clean reboot vm
+        """
+        return self._vm_clean_reboot(vm.ref)
+
+    def reboot_vm(self, vm):
+        """
+        reboot vm alias
+        """
+        return self.clean_reboot_vm(vm)
+
+    def resume_vm(self, vm):
+        """
+        resume vm
+        """
+        return self._vm_resume(vm.ref)
+
     def get_snapshots(self, vm):
         """
         get_snapshots vm
@@ -128,6 +213,15 @@ class API(object):
         data = self._vm_get_all_records()
         return [VM(record, self) for record in data]
 
+    def get_vm_by_name(self, name):
+        """
+        vm by name
+        """
+        vms = self.get_all_vms()
+        filtered = filter(lambda vm: vm.name_label == name, vms)
+        if filtered:
+            return filtered[0]
+
     def get_all_vm_templates(self):
         """
         all vm templates
@@ -141,3 +235,19 @@ class API(object):
         """
         vms = self.get_all_vm_templates()
         return filter(lambda vm: vm.is_instant, vms)
+
+    def get_instant_vm_template_by_name(self, name):
+        """
+        vm template by name
+        """
+        vms = self.get_instant_vm_templates()
+        filtered = filter(lambda vm: vm.name_label == name, vms)
+        if filtered:
+            return filtered[0]
+
+    def get_all_vm_not_templates(self):
+        """
+        all vm templates
+        """
+        vms = self.get_all_vms()
+        return filter(lambda vm: not vm.is_a_template, vms)
