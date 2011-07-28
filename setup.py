@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='xswizard',
-    version='0.1',
+    version='0.2',
     description='XenServer API wrapper',
     author='Shinya Okano',
     author_email='tokibito@gmail.com',
